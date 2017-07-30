@@ -11,10 +11,16 @@ link_regex = '>>[ ]*([0-9]+)'
 html_parser = HTMLParser()
 
 def get_categories():
-    return loader.get_json('https://2ch.hk/makaba/mobile.fcgi?task=get_boards')
+    try:
+        return loader.get_json('https://2ch.hk/makaba/mobile.fcgi?task=get_boards')
+    except:
+        return []
 
 def get_board_catalog(board):
-    return loader.get_json('https://2ch.hk/%s/catalog.json' % board)
+    try:
+        return loader.get_json('https://2ch.hk/%s/catalog.json' % board)
+    except:
+        return {'threads':[]}
 
 def get_thread(board, tid):
     return loader.get_json('https://2ch.hk/%s/res/%s.json' % (board, tid))
