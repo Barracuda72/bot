@@ -45,6 +45,7 @@ if (__name__ == '__main__'):
             cat = get_board_catalog(board_id)
             for thread_h in cat['threads']:
                 thread_num = thread_h['num']
+                print u'Тред %s' % thread_num
                 try:
                     thread = get_thread(board_id, thread_num)
                 except:
