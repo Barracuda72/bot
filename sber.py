@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # encoding: utf-8
 
-import loader
+import imgboards
 import datetime
 
 def get_curr():

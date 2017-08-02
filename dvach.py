@@ -5,34 +5,22 @@ import sys
 import re
 from HTMLParser import HTMLParser
 import lang
-import loader
-
-link_regex = '>>[ ]*([0-9]+)'
-html_parser = HTMLParser()
+import imgboards
 
 def get_categories():
     try:
-        return loader.get_json('https://2ch.hk/makaba/mobile.fcgi?task=get_boards')
+        return imgboards.get_json('https://2ch.hk/makaba/mobile.fcgi?task=get_boards')
     except:
         return []
 
 def get_board_catalog(board):
     try:
-        return loader.get_json('https://2ch.hk/%s/catalog.json' % board)
+        return imgboards.get_json('https://2ch.hk/%s/catalog.json' % board)
     except:
         return {'threads':[]}
 
 def get_thread(board, tid):
-    return loader.get_json('https://2ch.hk/%s/res/%s.json' % (board, tid))
-
-def strip_comment(c):
-    c = html_parser.unescape(c)
-    c = re.sub('<br>', '\n', c)
-    c = re.sub('<.*?>', ' ', c)
-    c = re.sub('>.*\n?', ' ', c)
-    #c = re.sub(link_regex + ' +(\(OP\)|)', ' ', c)
-    c = re.sub('[ \n]+', ' ', c)
-    return c.strip()
+    return imgboards.get_json('https://2ch.hk/%s/res/%s.json' % (board, tid))
 
 if (__name__ == '__main__'):
     categories = get_categories()
@@ -57,14 +45,14 @@ if (__name__ == '__main__'):
 
                 for post in posts:
                     comment = post['comment']
-                    replies_to = [m.group(1) for m in re.finditer(link_regex, comment)]
+                    replies_to = [m.group(1) for m in re.finditer(imgboards.link_regex, comment)]
                     if (len(replies_to) == 1):
                         orig = posts_dict.get(int(replies_to[0]))
                         if (orig):
                             replies_to_o = [m.group(1) for m in re.finditer(link_regex, orig['comment'])]
                             if (len(replies_to_o) <= 1):
-                                o_c = strip_comment(orig['comment'])
-                                r_c = strip_comment(post['comment'])
+                                o_c = imgboards.strip_comment(orig['comment'])
+                                r_c = imgboards.strip_comment(post['comment'])
                                 l_oc = len(o_c)
                                 l_rc = len(r_c)
                                 if (l_oc > 3 and l_oc < 100 and l_rc > 3 and l_rc < 100):
