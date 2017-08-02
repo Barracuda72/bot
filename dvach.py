@@ -49,7 +49,7 @@ if (__name__ == '__main__'):
                     if (len(replies_to) == 1):
                         orig = posts_dict.get(int(replies_to[0]))
                         if (orig):
-                            replies_to_o = [m.group(1) for m in re.finditer(link_regex, orig['comment'])]
+                            replies_to_o = [m.group(1) for m in re.finditer(imgboards.link_regex, orig['comment'])]
                             if (len(replies_to_o) <= 1):
                                 o_c = imgboards.strip_comment(orig['comment'])
                                 r_c = imgboards.strip_comment(post['comment'])
