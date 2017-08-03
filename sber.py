@@ -6,7 +6,7 @@ import datetime
 
 def get_curr():
     date = datetime.date.today().strftime('%d.%m.%Y')
-    data = loader.get_json('http://www.sberbank.ru/common%2Fjs%2Fget_quote_values.php%3Fversion%3D1%26inf_block%3D123%26_number_amount114%3D10000%26qid%5B%5D=3%26qid%5B%5D=2%26cbrf%3D0%26period%3Don%26_date_afrom114%3D' + date + '%26_date_ato114%3D'+ date + '%26mode%3Dfull%26display%3Djson')
+    data = imgboards.get_json('http://www.sberbank.ru/common%2Fjs%2Fget_quote_values.php%3Fversion%3D1%26inf_block%3D123%26_number_amount114%3D10000%26qid%5B%5D=3%26qid%5B%5D=2%26cbrf%3D0%26period%3Don%26_date_afrom114%3D' + date + '%26_date_ato114%3D'+ date + '%26mode%3Dfull%26display%3Djson')
     euro = (0.0, 0.0)
     usd = (0.0, 0.0)
     for k in data:
